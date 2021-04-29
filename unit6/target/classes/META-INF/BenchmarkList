@@ -1,0 +1,2 @@
+JMH S 21 task2.PerformanceTest S 53 task2.generated.PerformanceTest_containsArray_jmhTest S 13 containsArray S 11 AverageTime E A 1 1 1 E I 1 3 E E I 1 2 E E I 1 2 E E E E E M 1 9 arraySize 3 5 50000 6 500000 7 1000000 U 11 NANOSECONDS E E 
+JMH S 21 task2.PerformanceTest S 54 task2.generated.PerformanceTest_containsLinked_jmhTest S 14 containsLinked S 11 AverageTime E A 1 1 1 E I 1 3 E E I 1 2 E E I 1 2 E E E E E M 1 9 arraySize 3 5 50000 6 500000 7 1000000 U 11 NANOSECONDS E E 

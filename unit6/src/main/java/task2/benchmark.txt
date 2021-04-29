@@ -1,0 +1,69 @@
+По среднему времени на операцию
+Benchmark                              (arraySize)  Mode  Cnt        Score        Error  Units
+
+Для добавления в конец у LinkedList нужно добавить ссылки на другие элементы, 
+в то время как при добавлении у ArrayList в случае, если массив оказался недостаточного размера нужно скопировать старый массив в новый. Хотя сама вставка занимет О(1)
+
+PerformanceTest.addInEndArray                50000  avgt    4    20501,109 ±   5293,659  ns/op
+PerformanceTest.addInEndArray               500000  avgt    4   332865,954 ±  14820,168  ns/op
+PerformanceTest.addInEndArray              1000000  avgt    4   780705,022 ±  36910,690  ns/op
+
+PerformanceTest.addInEndLinked               50000  avgt    4      209,184 ±     96,264  ns/op
+PerformanceTest.addInEndLinked              500000  avgt    4      939,147 ±   1418,930  ns/op
+PerformanceTest.addInEndLinked             1000000  avgt    4     1130,385 ±   1363,913  ns/op
+
+
+Для добавления в конец у LinkedList до вставки ищется позиции вставки O(N), что просходит при каждой операции, в то время как 
+в ArrayList вызывается довольно быстрый метод System.arraycopy(). В худшем случае  вставка в середину списка была бы эффективнее для LinkedList.  
+PerformanceTest.addInMiddleArray             50000  avgt    4    21475,041 ±    476,386  ns/op
+PerformanceTest.addInMiddleArray            500000  avgt    4   423224,937 ± 308967,410  ns/op
+PerformanceTest.addInMiddleArray           1000000  avgt    4   825378,235 ±  82775,485  ns/op
+
+PerformanceTest.addInMiddleLinked            50000  avgt    4    33758,824 ±   5545,830  ns/op
+PerformanceTest.addInMiddleLinked           500000  avgt    4   537497,088 ±  17759,970  ns/op
+PerformanceTest.addInMiddleLinked          1000000  avgt    4  1128085,503 ± 119684,466  ns/op
+
+
+При поиске элемента и у LinkedList, и у ArrayList вычислитеьная сложность O(N)
+PerformanceTest.containsArray         50000  avgt    4   305,760 ±    89,145  ns/op
+PerformanceTest.containsArray        500000  avgt    4  1337,636 ±   910,078  ns/op
+PerformanceTest.containsArray       1000000  avgt    4  4868,805 ± 12158,135  ns/op
+PerformanceTest.containsLinked        50000  avgt    4   310,850 ±   128,688  ns/op
+PerformanceTest.containsLinked       500000  avgt    4  1313,991 ±   725,226  ns/op
+PerformanceTest.containsLinked      1000000  avgt    4  6163,844 ±  9799,927  ns/op
+
+
+Операция поиска элемента быстрее в ArrayList из-за того, что вычислительна сложность поиска в LinkedList О(N). 
+В ArrayList операция поиска О(1) в любом случае.
+PerformanceTest.getArray                     50000  avgt    4      359,771 ±      87,461  ns/op
+PerformanceTest.getArray                    500000  avgt    4     2072,463 ±    2153,639  ns/op
+PerformanceTest.getArray                   1000000  avgt    4     3649,265 ±   12053,417  ns/op
+
+PerformanceTest.getLinked                    50000  avgt    4    63321,851 ±    7082,893  ns/op
+PerformanceTest.getLinked                   500000  avgt    4   881468,550 ±  158002,827  ns/op
+PerformanceTest.getLinked                  1000000  avgt    4  1897906,684 ±  829948,295  ns/op
+
+
+Операция удаления по индексу в ArrayList работает медленнее чем в LinkedList, т.к. ArrayList нужно скопировать оставшуюся часть массива. 
+В LinkedList вычислительная скорость - О(N), из-за того, что до удаления список сканируется,
+ т.к. удаляемый элемент первый, то это лучший случай из-за чего вычислительная сложность O(1)
+PerformanceTest.removeWithIndexArray         50000  avgt    4     5671,265 ±    293,410  ns/op
+PerformanceTest.removeWithIndexArray        500000  avgt    4    76479,429 ±  32348,733  ns/op
+PerformanceTest.removeWithIndexArray       1000000  avgt    4   206912,473 ±  31137,277  ns/op
+
+PerformanceTest.removeWithIndexLinked        50000  avgt    4      196,550 ±     49,680  ns/op
+PerformanceTest.removeWithIndexLinked       500000  avgt    4      991,023 ±    258,731  ns/op
+PerformanceTest.removeWithIndexLinked      1000000  avgt    4     1127,106 ±   1269,028  ns/op
+
+
+Операция удаления по индексу в ArrayList работает медленнее чем в LinkedList, т.к. ArrayList нужно скопировать оставшуюся часть массива чтобы удалить нужный индекс.
+Операция в  ArrayList работает чуть меделеннее потому что также список сканируется, а не берется элемент по индексу. В данном случае разница не большая т.к. элемент 1.
+В LinkedList вычислительная скорость - О(N), из-за того, что до удаления список сканируется,
+т.к. удаляемый элемент первый, то это лучший случай из-за чего вычислительная сложность O(1).
+PerformanceTest.removeWithObjArray           50000  avgt    4     5742,226 ±    601,710  ns/op
+PerformanceTest.removeWithObjArray          500000  avgt    4    74610,594 ±  18584,596  ns/op
+PerformanceTest.removeWithObjArray         1000000  avgt    4   222785,564 ± 137964,536  ns/op
+
+PerformanceTest.removeWithObjLined           50000  avgt    4      219,617 ±    179,678  ns/op
+PerformanceTest.removeWithObjLined          500000  avgt    4      922,564 ±    251,482  ns/op
+PerformanceTest.removeWithObjLined         1000000  avgt    4     1118,442 ±    654,545  ns/op

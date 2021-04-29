@@ -1,0 +1,2 @@
+import import import import import import public class private static final private public void new public void new new new public void int int public void int public void int long public void int long public void long public void int int 
+Количество ключевых слов: 42
