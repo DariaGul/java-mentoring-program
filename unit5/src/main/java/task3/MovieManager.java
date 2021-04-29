@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MovieManager {
 
-    private static final String FILE_NAME = "./collection_of_films.txt";
+    private static final String FILE_NAME = "./unit5/collection_of_films.txt";
 
     private FilmSerializer filmSerializer;
     private List<Film> collectionFilm;
