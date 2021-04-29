@@ -44,9 +44,10 @@ PerformanceTest.getLinked                   500000  avgt    4   881468,550 ±  1
 PerformanceTest.getLinked                  1000000  avgt    4  1897906,684 ±  829948,295  ns/op
 
 
-Операция удаления по индексу в ArrayList работает медленнее чем в LinkedList, т.к. ArrayList нужно скопировать оставшуюся часть массива. 
+Операция удаления по индексу в ArrayList работает медленнее чем в LinkedList,
+т.к. ArrayList нужно скопировать оставшуюся часть массива.
 В LinkedList вычислительная скорость - О(N), из-за того, что до удаления список сканируется,
- т.к. удаляемый элемент первый, то это лучший случай из-за чего вычислительная сложность O(1)
+ т.к. удаляемый элемент первый, то это лучший случай из-за чего вычислительная сложность O(1).
 PerformanceTest.removeWithIndexArray         50000  avgt    4     5671,265 ±    293,410  ns/op
 PerformanceTest.removeWithIndexArray        500000  avgt    4    76479,429 ±  32348,733  ns/op
 PerformanceTest.removeWithIndexArray       1000000  avgt    4   206912,473 ±  31137,277  ns/op
@@ -55,9 +56,19 @@ PerformanceTest.removeWithIndexLinked        50000  avgt    4      196,550 ±   
 PerformanceTest.removeWithIndexLinked       500000  avgt    4      991,023 ±    258,731  ns/op
 PerformanceTest.removeWithIndexLinked      1000000  avgt    4     1127,106 ±   1269,028  ns/op
 
+PerformanceTest.removeWithIndexArray         50000  avgt    4     5344,262 ±   2104,475  ns/op
+PerformanceTest.removeWithIndexArray        500000  avgt    4   180502,610 ± 177880,626  ns/op
+PerformanceTest.removeWithIndexArray       1000000  avgt    4   379986,189 ± 423562,415  ns/op
 
-Операция удаления по индексу в ArrayList работает медленнее чем в LinkedList, т.к. ArrayList нужно скопировать оставшуюся часть массива чтобы удалить нужный индекс.
-Операция в  ArrayList работает чуть меделеннее потому что также список сканируется, а не берется элемент по индексу. В данном случае разница не большая т.к. элемент 1.
+PerformanceTest.removeWithIndexLinked        50000  avgt    4    67892,509 ±  19370,657  ns/op
+PerformanceTest.removeWithIndexLinked       500000  avgt    4   914217,180 ± 694827,645  ns/op
+PerformanceTest.removeWithIndexLinked      1000000  avgt    4  1889353,686 ± 512959,346  ns/op
+
+
+Операция удаления по объекту в ArrayList работает медленнее чем в LinkedList, т.к. ArrayList нужно скопировать
+оставшуюся часть массива чтобы удалить нужный индекс.
+Операция в  ArrayList работает чуть меделеннее потому что также список сканируется, а не берется элемент по индексу.
+В данном случае разница не большая т.к. элемент 1.
 В LinkedList вычислительная скорость - О(N), из-за того, что до удаления список сканируется,
 т.к. удаляемый элемент первый, то это лучший случай из-за чего вычислительная сложность O(1).
 PerformanceTest.removeWithObjArray           50000  avgt    4     5742,226 ±    601,710  ns/op

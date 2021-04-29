@@ -27,12 +27,12 @@ import org.openjdk.jmh.annotations.Warmup;
 public class PerformanceTest {
 
     @Param({"50000", "500000", "1000000"})
-    int arraySize;
-    int middleElement;
-    int lastElement;
+    private int arraySize;
+    private int middleElement;
+    private int lastElement;
 
-    List<String> arrayList = new ArrayList<>();
-    List<String> linkedList = new LinkedList<>();
+    private List<String> arrayList = new ArrayList<>();
+    private List<String> linkedList = new LinkedList<>();
 
     @Setup(Level.Invocation)
     public void load() {
@@ -99,12 +99,12 @@ public class PerformanceTest {
 
     @Benchmark
     public String removeWithIndexArray() {
-        return arrayList.remove(0);
+        return arrayList.remove(middleElement);
     }
 
     @Benchmark
     public String removeWithIndexLinked() {
-        return linkedList.remove(0);
+        return linkedList.remove(middleElement);
     }
 
 }

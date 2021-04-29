@@ -1,7 +1,5 @@
 package task3;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 public class Main {
@@ -9,13 +7,13 @@ public class Main {
     public static void main(String[] args) {
         StreamApiHelper helper = new StreamApiHelper();
         List<Person> persons = helper.getPersons();
-        helper.getUniqueNamePersons(persons);
-        helper.getSumAgeForPersonWithNeedName(persons, "Алексей");
-        helper.getSumAgeForPersonWithNeedName(persons, "Александр");
-        helper.convertToAgeMap(persons);
-        helper.convertToNameMap(persons);
-        helper.getListPersonsWhoseAgeOverGiven(persons, 33);
-        helper.getListPersonsWhoseAgeOverGiven(persons, 77);
+        System.out.println(helper.getUniqueNamePersons(persons));
+        System.out.println(helper.getSumAgeForPersonWithNeedName(persons, "Алексей"));
+        System.out.println(helper.getSumAgeForPersonWithNeedName(persons, "Александр"));
+        System.out.println(helper.convertToAgeMap(persons));
+        System.out.println(helper.convertToNameMap(persons));
+        System.out.println(helper.getListPersonsWhoseAgeOverGiven(persons, 33));
+        System.out.println(helper.getListPersonsWhoseAgeOverGiven(persons, 77));
     }
 
 

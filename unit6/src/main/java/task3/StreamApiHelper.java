@@ -1,10 +1,12 @@
 package task3;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class StreamApiHelper {
@@ -13,21 +15,18 @@ public class StreamApiHelper {
         List<Person> personsWithAgeOverGiven = persons.stream()
             .filter(c -> c.getAge() > age)
             .collect(Collectors.toList());
-        System.out.println(personsWithAgeOverGiven);
         return personsWithAgeOverGiven;
     }
 
     public Map<UUID, String> convertToNameMap(List<Person> persons) {
         Map<UUID, String> map = persons.stream()
             .collect(Collectors.toMap(Person::getId, Person::getName));
-        System.out.println(map);
         return map;
     }
 
-    public Map<UUID, Integer> convertToAgeMap(List<Person> persons) {
-        Map<UUID, Integer> map = persons.stream()
-            .collect(Collectors.toMap(Person::getId, Person::getAge));
-        System.out.println(map);
+    public Map<Integer, List<Person>> convertToAgeMap(List<Person> persons) {
+        Map<Integer, List<Person>> map = persons.stream()
+            .collect(Collectors.groupingBy(Person::getAge, Collectors.toCollection(ArrayList::new)));
         return map;
     }
 
@@ -37,7 +36,6 @@ public class StreamApiHelper {
             .map(Person::getAge)
             .mapToInt(Integer::intValue)
             .sum();
-        System.out.println(age);
         return age;
     }
 
@@ -45,7 +43,6 @@ public class StreamApiHelper {
         Set<String> name = persons.stream()
             .map(Person::getName)
             .collect(Collectors.toSet());
-        System.out.println(name);
         return name;
     }
 
