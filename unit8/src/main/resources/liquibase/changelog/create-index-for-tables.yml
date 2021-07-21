@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: create index for tables
+      author: d.gulenkova
+      runInTransaction: false
+      changes:
+        - sqlFile:
+            path: create_index.sql
+            relativeToChangelogFile: true
+            stripComments: true

@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: add table client
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: client
+            schemaName:  public
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    - primaryKey: true
+              - column:
+                  name: uuid
+                  type: uuid
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(50)
+                  constraints:
+                    - nullable: false
+                    - checkConstraint: first_name <> ''
+              - column:
+                  name: last_name
+                  type: varchar(50)
+                  constraints:
+                    - nullable: false
+                    - checkConstraint: last_name <> ''
+              - column:
+                  name: middle_name
+                  type: varchar(50)
+              - column:
+                  name: city
+                  type: varchar(50)
+        - addUniqueConstraint:
+            tableName: car_model
+            schemaName: public
+            columnNames: brand, model

@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: classpath:liquibase/changelog/create-car_model-table.yml
+  - include:
+      file: classpath:liquibase/changelog/create-client-table.yml
+  - include:
+      file: classpath:liquibase/changelog/create-car-table.yml
+  - include:
+      file: classpath:liquibase/changelog/create-insurance-table.yml
+  - include:
+      file: classpath:liquibase/changelog/create-client_insurance-table.yml
+  - include:
+      file: classpath:liquibase/changelog/create-index-for-tables.yml

@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: add table car_model
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: car_model
+            schemaName:  public
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    - primaryKey: true
+              - column:
+                  name: brand
+                  type: varchar(50)
+                  constraints:
+                    - nullable: false
+                    - checkConstraint: brand <> ''
+              - column:
+                  name: model
+                  type: varchar(50)
+                  constraints:
+                    - nullable: false
+                    - checkConstraint: model <> ''
+        - addUniqueConstraint:
+            tableName: car_model
+            schemaName: public
+            columnNames: brand, model

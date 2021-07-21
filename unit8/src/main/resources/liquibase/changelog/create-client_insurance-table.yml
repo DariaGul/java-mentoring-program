@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: add table client_insurance
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: client_insurance
+            schemaName:  public
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    - primaryKey: true
+              - column:
+                  name: client_id
+                  type: int
+              - column:
+                  name: insurance_id
+                  type: int

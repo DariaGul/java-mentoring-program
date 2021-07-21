@@ -1,0 +1,59 @@
+databaseChangeLog:
+  - changeSet:
+      id: add table car
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: car
+            schemaName: public
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    - primaryKey: true
+              - column:
+                  name: licence_plate
+                  type: varchar(6)
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: region
+                  type: int
+                  constraints:
+                    - nullable: false
+                    - checkConstraint: region >= 1 AND region <= 777
+              - column:
+                  name: model_id
+                  type: int
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: client_id
+                  type: int
+                  constraints:
+                    - nullable: false
+        - addUniqueConstraint:
+            tableName: car
+            schemaName: public
+            columnNames: licence_plate, region
+            constraintName: car_licence_plate_region
+        - addForeignKeyConstraint:
+            constraintName:  fk_car_car_model
+            baseColumnNames: model_id
+            baseTableName: car
+            baseTableSchemaName: public
+            onDelete: CASCADE
+            referencedColumnNames: id
+            referencedTableName: car_model
+            referencedTableSchemaName: public
+        - addForeignKeyConstraint:
+            constraintName:  fk_car_client
+            baseColumnNames: client_id
+            baseTableName: car
+            baseTableSchemaName: public
+            onDelete: CASCADE
+            referencedColumnNames: id
+            referencedTableName: client
+            referencedTableSchemaName: public
