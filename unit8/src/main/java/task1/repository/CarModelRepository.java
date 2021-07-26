@@ -8,7 +8,7 @@ import task1.model.CarModelEntity;
 public interface CarModelRepository extends JpaRepository<CarModelEntity, Long>,
     JpaSpecificationExecutor<CarModelEntity> {
 
-    public Optional<CarModelEntity> findByModelAndBrand(String model, String brand);
+    Optional<CarModelEntity> findByModelAndBrandId(String model, Long brand);
 
 
 }

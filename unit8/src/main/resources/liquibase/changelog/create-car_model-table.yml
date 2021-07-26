@@ -1,5 +1,31 @@
 databaseChangeLog:
   - changeSet:
+      id: add table brand
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: brand
+            schemaName: public
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    - primaryKey: true
+              - column:
+                  name: brand
+                  type: varchar(50)
+                  constraints:
+                    - nullable: false
+                    - checkConstraint: brand <> ''
+        - createIndex:
+            indexName: brandbrand
+            tableName: brand
+            columns:
+              - column:
+                  name: brand
+  - changeSet:
       id: add table car_model
       author: d.gulenkova
       changes:
@@ -14,18 +40,34 @@ databaseChangeLog:
                   constraints:
                     - primaryKey: true
               - column:
-                  name: brand
-                  type: varchar(50)
-                  constraints:
-                    - nullable: false
-                    - checkConstraint: brand <> ''
-              - column:
                   name: model
                   type: varchar(50)
                   constraints:
                     - nullable: false
                     - checkConstraint: model <> ''
+              - column:
+                  name: brand_id
+                  type: int
+                  constraints:
+                    - nullable: false
         - addUniqueConstraint:
             tableName: car_model
             schemaName: public
-            columnNames: brand, model
+            columnNames: brand_id, model
+        - createIndex:
+            indexName: car_brand_id_model
+            tableName: car_model
+            columns:
+              - column:
+                  name: brand_id
+              - column:
+                  name: model
+        - addForeignKeyConstraint:
+            constraintName: fk_brand_car_model
+            baseColumnNames: brand_id
+            baseTableName: car_model
+            baseTableSchemaName: public
+            onDelete: CASCADE
+            referencedColumnNames: id
+            referencedTableName: brand
+            referencedTableSchemaName: public

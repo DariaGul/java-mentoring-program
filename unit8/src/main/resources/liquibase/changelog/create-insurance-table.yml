@@ -41,3 +41,15 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: car
             referencedTableSchemaName: public
+        - createIndex:
+            indexName: insurance_number
+            tableName: insurance
+            columns:
+              - column:
+                  name: number
+        - createIndex:
+            indexName: insurance_end_date
+            tableName: insurance
+            columns:
+              - column:
+                  name: end_date

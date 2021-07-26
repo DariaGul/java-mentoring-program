@@ -13,15 +13,13 @@ public interface CarRepository extends JpaRepository<CarEntity, Long>,
     JpaSpecificationExecutor<CarEntity> {
 
     @EntityGraph("CarEntityGraph")
-    @Query("select CarEntity from CarEntity c inner join CarModelEntity cm "
-        + "where c.region = :region and cm.model = :model and cm.brand = :brand"
-    )
-    Optional<CarEntity> findCarEntityByCarModelAndRegion(@Param("model") String model, @Param("brand") String brand,
-                                                         @Param("region") String region);
+    Optional<CarEntity> findCarEntityByCarModelModelAndCarModelBrandAndRegion(@Param("model") String model,
+                                                                              @Param("brand") String brand,
+                                                                              @Param("region") String region);
 
     @EntityGraph("CarEntityGraph")
     Optional<CarEntity> findCarEntityByLicencePlateAndRegion(@Param("licencePlate") String licencePlate,
-                                                                @Param("region") Integer region);
+                                                             @Param("region") Integer region);
 
     @Modifying
     @Query("delete from CarEntity where licencePlate = :licencePlate and region = :region")

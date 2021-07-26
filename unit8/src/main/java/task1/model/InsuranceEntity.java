@@ -34,7 +34,7 @@ public class InsuranceEntity {
 
     @ManyToOne
     @JoinColumn(name = "car_id")
-    private CarEntity carId;
+    private CarEntity car;
 
     @ManyToMany(mappedBy = "listInsurance")
     private List<ClientEntity> listClients;

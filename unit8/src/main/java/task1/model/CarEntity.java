@@ -50,6 +50,6 @@ public class CarEntity {
     private CarModelEntity carModel;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    private ClientEntity clientId;
+    @JoinColumn(name = "client_id")
+    private ClientEntity client;
 }

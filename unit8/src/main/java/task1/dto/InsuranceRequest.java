@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.Data;
-import task1.model.CarEntity;
-import task1.model.ClientEntity;
 
 @Data
 public class InsuranceRequest {

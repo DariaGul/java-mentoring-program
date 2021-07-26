@@ -9,5 +9,3 @@ databaseChangeLog:
       file: classpath:liquibase/changelog/create-insurance-table.yml
   - include:
       file: classpath:liquibase/changelog/create-client_insurance-table.yml
-  - include:
-      file: classpath:liquibase/changelog/create-index-for-tables.yml
