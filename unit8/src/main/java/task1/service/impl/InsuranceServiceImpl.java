@@ -8,12 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import task1.dto.InsuranceRequest;
 import task1.mapper.InsuranceMapper;
-import task1.model.CarEntity;
 import task1.model.ClientEntity;
 import task1.model.InsuranceEntity;
-import task1.repository.CarRepository;
-import task1.repository.ClientRepository;
 import task1.repository.InsuranceRepository;
+import task1.service.CarService;
+import task1.service.ClientService;
 import task1.service.InsuranceService;
 
 @Service
@@ -21,14 +20,13 @@ import task1.service.InsuranceService;
 public class InsuranceServiceImpl implements InsuranceService {
 
     private final InsuranceRepository insuranceRepository;
-    private final CarRepository carRepository;
-    private final ClientRepository clientRepository;
+    private final CarService carService;
+    private final ClientService clientService;
     private final InsuranceMapper mapper;
 
     @Override
     @Transactional
     public InsuranceEntity create(InsuranceRequest insurance) {
-
         get(insurance.getNumber())
             .ifPresent(
                 c -> {
@@ -36,14 +34,19 @@ public class InsuranceServiceImpl implements InsuranceService {
                 });
 
         return insuranceRepository.save(
-            mapper.toInsuranceEntity(insurance, saveListClientsInsurance(insurance), getCar(insurance)));
+            mapper.toInsuranceEntity(
+                insurance,
+                saveListClientsInsurance(insurance),
+                carService.get(insurance.getCarId())
+            )
+        );
     }
 
     @Override
     @Transactional
-    public InsuranceEntity update(InsuranceRequest insurance) {
+    public InsuranceEntity update(InsuranceRequest insurance, Long id) {
 
-        InsuranceEntity insuranceEntityDb = get(insurance.getNumber())
+        InsuranceEntity insuranceEntityDb = insuranceRepository.findById(id)
             .orElseThrow(
                 () -> new BadRequestException("Car does not exist")
             );
@@ -58,7 +61,7 @@ public class InsuranceServiceImpl implements InsuranceService {
             insuranceEntityDb.setEndDate(insurance.getEndDate());
         }
         if (insurance.getCarId() != null) {
-            insuranceEntityDb.setCar(getCar(insurance));
+            insuranceEntityDb.setCar(carService.get(insurance.getCarId()));
         }
         if (insurance.getListClients() != null) {
             insuranceEntityDb.setListClients(saveListClientsInsurance(insurance));
@@ -67,21 +70,17 @@ public class InsuranceServiceImpl implements InsuranceService {
         return insuranceRepository.save(insuranceEntityDb);
     }
 
-    private CarEntity getCar(InsuranceRequest insurance) {
-        return carRepository
-            .findById(insurance.getCarId())
-            .orElseThrow(
-                () -> new IllegalArgumentException("Car does not exist")
-            );
-    }
-
     public Optional<InsuranceEntity> get(String number) {
         return insuranceRepository.findByNumber(number);
     }
 
     @Override
-    public Optional<InsuranceEntity> get(Long id) {
-        return insuranceRepository.findById(id);
+    public InsuranceEntity get(Long id) {
+        return insuranceRepository
+            .findById(id)
+            .orElseThrow(
+                () -> new BadRequestException("Insurance does not exist")
+            );
     }
 
     @Override
@@ -93,7 +92,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     }
 
     private List<ClientEntity> saveListClientsInsurance(InsuranceRequest insurance) {
-        List<ClientEntity> listClientsEntity = clientRepository.findByIdIn(insurance.getListClients());
+        List<ClientEntity> listClientsEntity = clientService.get(insurance.getListClients());
         if (insurance.getListClients().size() != listClientsEntity.size()) {
             throw new IllegalArgumentException("Client(s) does not exist");
         }

@@ -1,9 +1,11 @@
 package task1.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import task1.dto.ClientRequest;
 import task1.model.ClientEntity;
+import task1.model.InsuranceEntity;
 
 public interface ClientService {
 
@@ -13,5 +15,7 @@ public interface ClientService {
 
     void delete(UUID id);
 
-    Optional<ClientEntity> get(UUID id);
+    ClientEntity get(UUID id);
+
+    List<ClientEntity> get(List<UUID> ids);
 }

@@ -2,6 +2,7 @@ package task1.model;
 
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +25,6 @@ public class BrandEntity {
     private Long id;
     private String brand;
 
-    @OneToMany
+    @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY)
     private List<CarModelEntity> listCarModel;
 }

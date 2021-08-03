@@ -10,9 +10,9 @@ public interface CarModelService {
 
     CarModelEntity create(CarModelRequest insurance);
 
-    CarModelEntity update(CarModelRequest insurance);
+    CarModelEntity update(CarModelRequest insurance, Long id);
 
-    void delete(CarModelRequest client);
+    void delete(Long id);
 
-    Optional<CarModelEntity> get(Long id);
+    CarModelEntity get(Long id);
 }

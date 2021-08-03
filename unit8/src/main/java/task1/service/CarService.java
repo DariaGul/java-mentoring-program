@@ -8,9 +8,9 @@ public interface CarService {
 
     CarEntity create(CarRequest insurance);
 
-    CarEntity update(CarRequest insurance);
+    CarEntity update(CarRequest insurance, Long id);
 
     void delete(CarRequest client);
 
-    Optional<CarEntity> get(Long id);
+    CarEntity get(Long id);
 }

@@ -1,6 +1,6 @@
 package task1.service.impl;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 import javax.ws.rs.BadRequestException;
 import lombok.RequiredArgsConstructor;
@@ -58,8 +58,18 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Optional<ClientEntity> get(UUID id) {
-        return clientRepository.findById(id);
+    public ClientEntity get(UUID id) {
+        return clientRepository
+            .findById(id)
+            .orElseThrow(
+                () -> new BadRequestException("Client does not exist")
+            );
+    }
+
+    @Override
+    public List<ClientEntity> get(List<UUID> ids) {
+        return clientRepository
+            .findByIdIn(ids);
     }
 
 }

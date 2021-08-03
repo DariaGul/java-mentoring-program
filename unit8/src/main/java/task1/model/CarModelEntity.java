@@ -26,7 +26,7 @@ public class CarModelEntity {
     private Long id;
     private String model;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "carModel", fetch = FetchType.LAZY)
     private List<CarEntity> cars;
 
     @ManyToOne

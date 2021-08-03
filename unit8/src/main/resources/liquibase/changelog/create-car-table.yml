@@ -38,9 +38,9 @@ databaseChangeLog:
             tableName: car
             schemaName: public
             columnNames: licence_plate, region
-            constraintName: car_licence_plate_region
+            constraintName: car_licence_plate_region_key
         - addForeignKeyConstraint:
-            constraintName:  fk_car_car_model
+            constraintName:  car_model_id_fkey
             baseColumnNames: model_id
             baseTableName: car
             baseTableSchemaName: public
@@ -49,7 +49,7 @@ databaseChangeLog:
             referencedTableName: car_model
             referencedTableSchemaName: public
         - addForeignKeyConstraint:
-            constraintName:  fk_car_client
+            constraintName:  car_client_id_fkey
             baseColumnNames: client_id
             baseTableName: car
             baseTableSchemaName: public
@@ -58,7 +58,7 @@ databaseChangeLog:
             referencedTableName: client
             referencedTableSchemaName: public
         - createIndex:
-            indexName: car_licence_plate_region_index
+            indexName: car_licence_plate_region_idx
             tableName: car
             columns:
               - column:

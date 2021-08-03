@@ -9,8 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import task1.model.CarEntity;
 
-public interface CarRepository extends JpaRepository<CarEntity, Long>,
-    JpaSpecificationExecutor<CarEntity> {
+public interface CarRepository extends JpaRepository<CarEntity, Long> {
 
     @EntityGraph("CarEntityGraph")
     Optional<CarEntity> findCarEntityByCarModelModelAndCarModelBrandAndRegion(@Param("model") String model,

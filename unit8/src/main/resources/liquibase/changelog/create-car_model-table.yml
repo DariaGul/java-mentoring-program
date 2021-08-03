@@ -20,7 +20,7 @@ databaseChangeLog:
                     - nullable: false
                     - checkConstraint: brand <> ''
         - createIndex:
-            indexName: brandbrand
+            indexName: brand_brand_idx
             tableName: brand
             columns:
               - column:
@@ -55,7 +55,7 @@ databaseChangeLog:
             schemaName: public
             columnNames: brand_id, model
         - createIndex:
-            indexName: car_brand_id_model
+            indexName: car_model_brand_id_model_idx
             tableName: car_model
             columns:
               - column:
@@ -63,7 +63,7 @@ databaseChangeLog:
               - column:
                   name: model
         - addForeignKeyConstraint:
-            constraintName: fk_brand_car_model
+            constraintName: car_model_brand_id_fkey
             baseColumnNames: brand_id
             baseTableName: car_model
             baseTableSchemaName: public

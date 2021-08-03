@@ -3,14 +3,23 @@ package task1.service.impl;
 import java.util.Optional;
 import javax.ws.rs.BadRequestException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.dao.support.PersistenceExceptionTranslator;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import task1.dto.CarModelRequest;
 import task1.mapper.CarModelMapper;
-import task1.model.BrandEntity;
 import task1.model.CarModelEntity;
-import task1.repository.BrandRepository;
 import task1.repository.CarModelRepository;
+import task1.service.BrandService;
 import task1.service.CarModelService;
 
 @Service
@@ -18,11 +27,26 @@ import task1.service.CarModelService;
 public class CarModelServiceImpl implements CarModelService {
 
     private final CarModelRepository carModelRepository;
-    private final BrandRepository brandRepository;
+    private final BrandService brandService;
     private final CarModelMapper mapper;
 
     @Transactional
     public CarModelEntity create(CarModelRequest carModel) {
+        findByModelAndBrand(carModel.getModel(), carModel.getBrandId())
+            .ifPresent(
+                c -> {
+                    throw new BadRequestException("Car model already exist");
+                });
+        return carModelRepository.save(
+            mapper.toCarModelEntity(
+                carModel.getModel(),
+                brandService.get(carModel.getBrandId())
+            )
+        );
+    }
+
+    @Transactional
+    public CarModelEntity update(CarModelRequest carModel, Long id) {
         String model = carModel.getModel();
         Long brand = carModel.getBrandId();
         findByModelAndBrand(model, brand)
@@ -31,47 +55,36 @@ public class CarModelServiceImpl implements CarModelService {
                     throw new BadRequestException("Car model already exist");
                 });
 
-        return carModelRepository.save(mapper.toCarModelEntity(model, getBrand(brand)));
-    }
-
-    @Transactional
-    public CarModelEntity update(CarModelRequest carModel) {
-        String model = carModel.getModel();
-        Long brand = carModel.getBrandId();
-        CarModelEntity carModelEntityDb = findByModelAndBrand(model, brand)
-            .orElseThrow(
-                () -> new BadRequestException("Car model does not exist")
-            );
+        CarModelEntity carModelEntityDb = carModelRepository
+            .findById(id)
+            .orElseThrow(() -> new BadRequestException("Car model does not exist"));
 
         if (model != null) {
             carModelEntityDb.setModel(model);
         }
         if (brand != null) {
-            carModelEntityDb.setBrand(getBrand(brand));
+            carModelEntityDb.setBrand(brandService.get(brand));
         }
 
         return carModelRepository.save(carModelEntityDb);
     }
 
-    public Optional<CarModelEntity> findByModelAndBrand(String model, Long brand) {
-        return carModelRepository.findByModelAndBrandId(model, brand);
-    }
-
     @Transactional
-    public void delete(CarModelRequest carModel) {
-        findByModelAndBrand(carModel.getModel(), carModel.getBrandId())
+    public void delete(Long id) {
+        carModelRepository.findById(id)
             .ifPresent(carModelRepository::delete);
     }
 
     @Override
-    public Optional<CarModelEntity> get(Long id) {
-        return carModelRepository.findById(id);
+    public CarModelEntity get(Long id) {
+        return carModelRepository
+            .findById(id)
+            .orElseThrow(
+                () -> new BadRequestException("Car model does not exist")
+            );
     }
 
-    private BrandEntity getBrand(Long brandId) {
-        return brandRepository.findById(brandId)
-            .orElseThrow(
-                () -> new IllegalArgumentException("Brand does not exist")
-            );
+    public Optional<CarModelEntity> findByModelAndBrand(String model, Long brand) {
+        return carModelRepository.findByModelAndBrandId(model, brand);
     }
 }

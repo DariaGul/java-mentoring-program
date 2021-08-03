@@ -23,6 +23,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NamedEntityGraph(name = "CarEntityGraph",
     attributeNodes = {
+        @NamedAttributeNode("id"),
         @NamedAttributeNode("licencePlate"),
         @NamedAttributeNode("region"),
         @NamedAttributeNode(value = "carModel", subgraph = "CarModelSubgraph"),

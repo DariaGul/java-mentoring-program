@@ -10,6 +10,5 @@ import task1.model.ClientEntity;
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
 
-    @Mapping(target = "id", ignore = true)
     ClientEntity toClientEntity(ClientRequest request);
 }

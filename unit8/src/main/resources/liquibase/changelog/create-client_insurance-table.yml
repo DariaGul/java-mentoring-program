@@ -15,7 +15,7 @@ databaseChangeLog:
                     - primaryKey: true
               - column:
                   name: client_id
-                  type: int
+                  type: uuid
               - column:
                   name: insurance_id
                   type: int

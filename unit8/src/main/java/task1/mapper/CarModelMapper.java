@@ -8,7 +8,6 @@ import task1.model.CarModelEntity;
 @Mapper(componentModel = "spring")
 public interface CarModelMapper {
 
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "brand", source = "brandEntity")
     CarModelEntity toCarModelEntity(String model, BrandEntity brandEntity);
 }

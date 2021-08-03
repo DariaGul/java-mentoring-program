@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +24,33 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
+@NamedEntityGraph(name = "InsuranceEntityGraph",
+    attributeNodes = {
+        @NamedAttributeNode("id"),
+        @NamedAttributeNode("number"),
+        @NamedAttributeNode("startDate"),
+        @NamedAttributeNode("endDate"),
+        @NamedAttributeNode(value = "car", subgraph = "CarSubgraph"),
+        @NamedAttributeNode(value = "listClients", subgraph = "ClientSubgraph"),
+    },
+    subgraphs = {
+        @NamedSubgraph(
+            name = "CarSubgraph",
+            attributeNodes = {
+                @NamedAttributeNode("licencePlate"),
+                @NamedAttributeNode("region")
+            }
+        ),
+        @NamedSubgraph(
+            name = "ClientSubgraph",
+            attributeNodes = {
+                @NamedAttributeNode("id"),
+                @NamedAttributeNode("firstName"),
+                @NamedAttributeNode("lastName"),
+                @NamedAttributeNode("middleName")
+            }
+        )
+    })
 public class InsuranceEntity {
 
     @Id
@@ -36,7 +66,11 @@ public class InsuranceEntity {
     @JoinColumn(name = "car_id")
     private CarEntity car;
 
-    @ManyToMany(mappedBy = "listInsurance")
+    @ManyToMany
+    @JoinTable(
+        name = "client_insurance",
+        joinColumns = @JoinColumn(name = "insurance_id"),
+        inverseJoinColumns = @JoinColumn(name = "client_id"))
     private List<ClientEntity> listClients;
 
 }

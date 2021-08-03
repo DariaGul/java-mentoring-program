@@ -11,7 +11,6 @@ import task1.model.InsuranceEntity;
 @Mapper(componentModel = "spring")
 public interface InsuranceMapper {
 
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "listClients", source = "clientEntities")
     @Mapping(target = "car", source = "carEntity")
     InsuranceEntity toInsuranceEntity(InsuranceRequest request, List<ClientEntity> clientEntities, CarEntity carEntity);
