@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: add table client
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: client
+            schemaName:  public
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    - nullable: false
+                    - primaryKey: true
+              - column:
+                  name: first_name
+                  type: varchar(50)
+                  constraints:
+                    - nullable: false
+                    - checkConstraint: first_name <> ''
+              - column:
+                  name: last_name
+                  type: varchar(50)
+                  constraints:
+                    - nullable: false
+                    - checkConstraint: last_name <> ''
+              - column:
+                  name: middle_name
+                  type: varchar(50)
+              - column:
+                  name: city
+                  type: varchar(50)

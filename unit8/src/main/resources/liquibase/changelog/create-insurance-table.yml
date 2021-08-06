@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: add table insurance
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: insurance
+            schemaName:  public
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    - primaryKey: true
+              - column:
+                  name: number
+                  type: varchar(20)
+                  constraints:
+                    - nullable: false
+                    - unique: true
+              - column:
+                  name: start_date
+                  type: datetime
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: end_date
+                  type: datetime
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: car_id
+                  type: int
+        - addForeignKeyConstraint:
+            constraintName:  insurance_car_id_fkey
+            baseColumnNames: car_id
+            baseTableName: insurance
+            baseTableSchemaName: public
+            onDelete: CASCADE
+            referencedColumnNames: id
+            referencedTableName: car
+            referencedTableSchemaName: public
+        - createIndex:
+            indexName: insurance_number_idx
+            tableName: insurance
+            columns:
+              - column:
+                  name: number
+        - createIndex:
+            indexName: insurance_end_date_idx
+            tableName: insurance
+            columns:
+              - column:
+                  name: end_date
