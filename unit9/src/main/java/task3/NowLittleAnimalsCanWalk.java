@@ -30,8 +30,6 @@ public class NowLittleAnimalsCanWalk implements Runnable {
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
         }
-
-
     }
 
     public static void main(String[] args) {

@@ -16,12 +16,6 @@ public class AccountThreadDeadLock implements Runnable {
     public void run() {
         for (int i = 0; i < 4000; i++) {
             synchronized (accountFrom) {
-
-                try {
-                    Thread.sleep(20);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 synchronized (accountTo) {
                     if (accountFrom.takeOffMoney(money)) {
                         accountTo.addMoney(money);
