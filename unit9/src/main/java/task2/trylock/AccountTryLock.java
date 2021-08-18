@@ -1,0 +1,50 @@
+package task2.trylock;
+
+public class AccountTryLock implements Runnable {
+
+    private final Account accountFrom;
+    private final Account accountTo;
+    private final int money;
+
+    public AccountTryLock(Account accountFrom, Account accountTo, int money) {
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
+        this.money = money;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 4000; i++) {
+            while (true) {
+                if (accountFrom.getLock().tryLock()) {
+                    try {
+                        if (accountTo.getLock().tryLock()) {
+                            try {
+                                transfer();
+                                break;
+                            } finally {
+                                accountTo.getLock().unlock();
+                            }
+                        }
+                    } finally {
+                        accountFrom.getLock().unlock();
+                    }
+                }
+            }
+        }
+    }
+
+    private void transfer() {
+        System.out.printf("BEFORE: accountFrom: - %d, accountTo: - %d, ",
+                          accountFrom.getCacheBalance(),
+                          accountTo.getCacheBalance());
+        if (accountFrom.takeOffMoney(money)) {
+            accountTo.addMoney(money);
+            System.out.printf("AFTER: accountFrom: - %d, accountTo: - %d, money - %s%n",
+                              accountFrom.getCacheBalance(),
+                              accountTo.getCacheBalance(), money);
+        } else {
+            System.out.printf("money - %d%n", money);
+        }
+    }
+}
