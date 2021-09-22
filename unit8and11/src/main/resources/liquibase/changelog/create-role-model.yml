@@ -1,0 +1,114 @@
+databaseChangeLog:
+  - changeSet:
+      id: add table privilege
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: privilege
+            schemaName:  public
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    - primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    - nullable: false
+                    - unique: true
+  - changeSet:
+      id: add table role
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: role
+            schemaName: public
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    - primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    - nullable: false
+                    - unique: true
+  - changeSet:
+      id: add table user_table
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: user_table
+            schemaName: public
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    - primaryKey: true
+              - column:
+                  name: email
+                  type: varchar(100)
+                  constraints:
+                    - nullable: false
+                    - unique: true
+              - column:
+                  name: password
+                  type: varchar(100)
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: enabled
+                  type: boolean
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: token_expired
+                  type: boolean
+  - changeSet:
+      id: add table user_table_roles
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: user_table_roles
+            schemaName: public
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    - primaryKey: true
+              - column:
+                  name: user_table_id
+                  type: bigint
+              - column:
+                  name: role_id
+                  type: bigint
+  - changeSet:
+      id: add table roles_privileges
+      author: d.gulenkova
+      changes:
+        - createTable:
+            tableName: roles_privileges
+            schemaName: public
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    - primaryKey: true
+              - column:
+                  name: role_id
+                  type: bigint
+              - column:
+                  name: privilege_id
+                  type: bigint
